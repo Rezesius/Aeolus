@@ -10,19 +10,30 @@ namespace OC\Core\Command\App;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ListApps extends Command {
 	protected function configure() {
 		$this
 			->setName('app:list')
-			->setDescription('List all available apps');
+			->setDescription('List all available apps')
+			->addOption(
+				'versions',
+				null,
+				InputOption::VALUE_NONE,
+				'include the app versions'
+			);
 	}
 
 	protected function execute(InputInterface $input, OutputInterface $output) {
 		$apps = \OC_App::getAllApps();
 		$enabledApps = array();
 		$disabledApps = array();
+		$versions = [];
+		if ($input->getOption('versions')) {
+			$versions = \OC_App::getAppVersions();
+		}
 
 		//sort enabled apps above disabled apps
 		foreach ($apps as $app) {
@@ -37,11 +48,11 @@ class ListApps extends Command {
 		sort($disabledApps);
 		$output->writeln('Enabled:');
 		foreach ($enabledApps as $app) {
-			$output->writeln(' - ' . $app);
+			$output->writeln(' - ' . $app . (isset($versions[$app]) ? ' (' . $versions[$app] . ')' : ''));
 		}
 		$output->writeln('Disabled:');
 		foreach ($disabledApps as $app) {
-			$output->writeln(' - ' . $app);
+			$output->writeln(' - ' . $app . (isset($versions[$app]) ? ' (' . $versions[$app] . ')' : ''));
 		}
 	}
 }
