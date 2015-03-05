@@ -29,6 +29,8 @@ abstract class Common implements \OC\Files\Storage\Storage {
 	protected $watcher;
 	protected $storageCache;
 
+	protected $mountOptions = [];
+
 	/**
 	 * @var string[]
 	 */
@@ -451,4 +453,19 @@ abstract class Common implements \OC\Files\Storage\Storage {
 		return [];
 	}
 
+	/**
+	 * @param array $options
+	 */
+	public function setMountOptions(array $options) {
+		$this->mountOptions = $options;
+	}
+
+	/**
+	 * @param string $name
+	 * @param mixed $default
+	 * @return mixed
+	 */
+	public function getMountOption($name, $default = null) {
+		return isset($this->mountOptions[$name]) ? $this->mountOptions[$name] : $default;
+	}
 }
