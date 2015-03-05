@@ -327,9 +327,7 @@ class Preview {
 	 * deletes all previews of a file
 	 */
 	public function deleteAllPreviews() {
-		$file = $this->getFile();
-
-		$fileInfo = $this->getFileInfo($file);
+		$fileInfo = $this->getFileInfo();
 
 		$toDelete = $this->getChildren();
 		$toDelete[] = $fileInfo;
@@ -339,9 +337,13 @@ class Preview {
 				/** @var \OCP\Files\FileInfo $delete */
 				$fileId = $delete->getId();
 
-				$previewPath = $this->getPreviewPath($fileId);
-				$this->userView->deleteAll($previewPath);
-				$this->userView->rmdir($previewPath);
+				// getId() might return null, e.g. when the file is a
+				// .ocTransferId*.part file from chunked file upload.
+				if (!empty($fileId)) {
+					$previewPath = $this->getPreviewPath($fileId);
+					$this->userView->deleteAll($previewPath);
+					$this->userView->rmdir($previewPath);
+				}
 			}
 		}
 	}
