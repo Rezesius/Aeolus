@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # ownCloud
 
 [ownCloud](http://ownCloud.org) gives you freedom and control over your own data.
@@ -36,3 +37,11 @@ https://www.transifex.com/projects/p/owncloud/
 
 For more detailed information about translations:
 http://doc.owncloud.org/server/8.0/developer_manual/core/translation.html
+=======
+3rdparty
+========
+
+Some 3rd party libraries that are necessary to run ownCloud
+
+[![Dependency Status](https://www.versioneye.com/user/projects/54d1f76f3ca0840b190000c0/badge.svg?style=flat)](https://www.versioneye.com/user/projects/54d1f76f3ca0840b190000c0#tab-settings)
+>>>>>>> 0f862d433ad146ebca97e356c703369777c2a30f
